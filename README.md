@@ -1,4 +1,4 @@
-Sophia - Css/HTML
+Sophia - Css/Jinja HTML
 
 
 Samuel/Paulo - CRUD banco de dados
