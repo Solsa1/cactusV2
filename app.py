@@ -1,8 +1,11 @@
 from flask import *
+from flask_session import Session
 import sqlite3
 
 app = Flask(__name__)
-
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"]  = "filesystem"
+Session(app)
 database = 'database.db'
 
 def getIdEmpresa(nome):
@@ -43,6 +46,20 @@ def init_db():
             script = bd.read() 
             db.cursor().executescript(script)
         db.commit()
+
+# SESSION 
+
+@app.route('/setcookie')
+def casa():
+    res = make_response("<h4> Variável do session foi setada </h4>")
+    session['username'] = 'john'
+    return res
+
+@app.route('/getcookie')
+def getVariable():
+    uname = session.get("username", None)
+    return f"The username is {uname}"
+
 
 @app.route('/')
 def home():
@@ -169,6 +186,7 @@ def deletarUsuario():
     finally:
         db.close()
         return redirect('/')
+    
 
 if __name__ == "__main__":
     init_db()
