@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h4>digite aqui seu email:</h4>
+    <input type="email"/>
+
+    <h4>digite sua senha:</h4>
+    <input type="password"/>
+    <br>
+    <br>
+    <button type="submit">logar</button>
+
+</body>
+</html>
