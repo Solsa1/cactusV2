@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="loginpage.css" media="screen" />
+
 </head>
 <body>
+    <center>
     <h4>digite aqui seu email:</h4>
     <input type="email"/>
 
@@ -13,7 +16,9 @@
     <input type="password"/>
     <br>
     <br>
-    <button type="submit">logar</button>
+    <button type="submit" ; style="color: aqua;">logar</button>
+</center>
+
 
 </body>
 </html>
