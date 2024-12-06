@@ -1,0 +1,23 @@
+ body{
+    background-image: url(astronauta.png);
+    background-repeat: no-repeat;
+    background-size: cover;   
+}
+
+h1{
+    color: aliceblue;
+}
+
+#divBusca{
+    border-radius: 10px;
+    height: 37px;
+    width: 400px;
+}
+
+h4{
+    color: aliceblue;
+}
+
+html, body{
+    font-size: 50px;
+}
