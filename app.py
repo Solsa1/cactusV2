@@ -8,6 +8,16 @@ app.config["SESSION_TYPE"]  = "filesystem"
 Session(app)
 database = 'database.db'
 
+# ROTAS PARA O URL FOR PARA CONECTAR OS TEMPLATES
+
+@app.route('/login')
+def login():
+    return render_template("login.html")
+
+@app.route("/cadastro")
+def cadastro():
+    return render_template("cadastro.html")
+
 def getIdEmpresa(nome):
     try:
         db = getDb()
@@ -17,6 +27,19 @@ def getIdEmpresa(nome):
         return empresa1[0]
     except sqlite3.Error as e:
         print('Erro para conseguir o id da empresa desejada')
+        print(e)
+    finally:
+        db.close()
+
+def getIddUsuario(nome):
+    try:
+        db = getDb()
+        cursor = db.cursor()
+        cursor.execute('SELECT id FROM usuario WHERE email = ?', (nome, ))
+        usuario1 = cursor.fetchone()
+        return usuario1[0]
+    except sqlite3.Error as e:
+        print('Erro para conseguir o id do usuario desejado')
         print(e)
     finally:
         db.close()
@@ -49,11 +72,25 @@ def init_db():
 
 # SESSION 
 
-@app.route('/setcookie')
+@app.route('/setcookie', methods=['POST'])
 def casa():
-    res = make_response("<h4> Variável do session foi setada </h4>")
-    session['username'] = 'john'
-    return res
+    session['username'] = request.form['loginEmail']
+    session['password'] = request.form['senhaEmail']
+    email = session['username']
+    password = session['password']
+    identificador = getIddUsuario(email)
+    if identificador is not None:
+        db = getDb()
+        cursor = db.cursor()
+        cursor.execute('SELECT * from usuario where id = ?', (identificador, ))
+        usuariolog = cursor.fetchone()
+        db.commit()
+        print(usuariolog)
+        print('vc ta legal')
+    else:
+        print('erro em encontrar o usuario')
+    return render_template('login.html')
+   
 
 @app.route('/getcookie')
 def getVariable():
@@ -63,7 +100,7 @@ def getVariable():
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('login.html')
 
 @app.route('/criarEmpresa', methods=['POST'])
 def criarEmpresa():

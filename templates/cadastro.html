@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+</head>
+<body>
+    <h1> Faz o cadrastro aí cara de merda </h1>
+
+    <form action="/criarUsuario" method="post">
+        <input type="text" name="nomeUsuario" placeholder="Digite seu nome">
+        <input type="text" name="emailUsuario" placeholder="Digite seu email">
+        <input type="text" name="senhaUsuario" placeholder="Digite suia senha">
+        <input type="text" name="fotoUsuario" placeholder="Ponha sua foto de perfil">
+        <button type="submit">clica ai</button>
+        <p> <a href="{{ url_for('login') }}"> vai pro login mermao</p>
+    </form>
+
+</body>
+</html>
