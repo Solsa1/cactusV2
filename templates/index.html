@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,21 +7,21 @@
 </head>
 <body>
     <h1>criar empresa</h1>
-    <form action="/criarEmpresa" method="post">
+    <form action="/criarEmpresa" method="post" enctype="multipart/form-data">
         <input type="text" name="nomeEmpresa" class="form-control" placeholder="Digite o nome da empresa" required>
-        <input type="text" name="emailEmpresa" class="form-control" placeholder="Digite o email da empresa" required>
-        <input type="text" name="senhaEmpresa" class="form-control" placeholder="Digite uma senha para a empresa" required>
-        <input type="text" name="logo" class="form-control" placeholder= "Ponha uma logo para a empresa">
+        <input type="email" name="emailEmpresa" class="form-control" placeholder="Digite o email da empresa" required>
+        <input type="password" name="senhaEmpresa" class="form-control" placeholder="Digite uma senha para a empresa" required>
+        <input type="file" name="logo" class="form-control" accept=".jpeg, .jpg">
         <input type="text" name="descricaoEmpresa" class="form-control" placeholder="Digite uma breve descrição da empresa" required>
         <button type="submit">clica ai</button>
     </form>
     <h1>atualizar empresa</h1>
-    <form action="/atualizarEmpresa" method="post">
+    <form action="/atualizarEmpresa" method="post" enctype="multipart/form-data">
         <input type="text" name="antigoNomeEmpresa" placeholder="Digite o antigo nome da empresa">
         <input type="text" name="novoNomeEmpresa" class="form-control" placeholder="Digite o novo nome da empresa" required>
-        <input type="text" name="novoEmailEmpresa" class="form-control" placeholder="Digite o novo email da empresa" required>
-        <input type="text" name="novaSenhaEmpresa" class="form-control" placeholder="Digite uma nova senha para a empresa" required>
-        <input type="text" name="novoLogo" class="form-control" placeholder="Ponha uma nova logo para a empresa">
+        <input type="email" name="novoEmailEmpresa" class="form-control" placeholder="Digite o novo email da empresa" required>
+        <input type="password" name="novaSenhaEmpresa" class="form-control" placeholder="Digite uma nova senha para a empresa" required>
+        <input type="file" name="novoLogo" class="form-control" accept=".jpeg, .jpg">
         <input type="text" name="novaDescricaoEmpresa" class="form-control" placeholder="Digite uma nova e breve descrição da empresa" required>
         <button type="submit">clica ai dog</button>
     </form>
@@ -31,26 +31,65 @@
         <button type="submit">Clica ai dog</button>
     </form>
     <h1>criar usuario</h1>
-    <form action="/criarUsuario" method="post">
+    <form action="/criarUsuario" method="post" enctype="multipart/form-data">
         <input type="text" name="nomeUsuario" placeholder="Digite seu nome">
-        <input type="text" name="emailUsuario" placeholder="Digite seu email">
-        <input type="text" name="senhaUsuario" placeholder="Digite suia senha">
-        <input type="text" name="fotoUsuario" placeholder="Ponha sua foto de perfil">
+        <input type="email" name="emailUsuario" placeholder="Digite seu email">
+        <input type="password" name="senhaUsuario" placeholder="Digite suia senha">
+        <input type="file" name="fotoUsuario" accept=".jpeg, .jpg">
         <button type="submit">clica ai</button>
     </form>
     <h1>atualizar usuario</h1>
-    <form action="/atualizarUsuario" method="post">
+    <form action="/atualizarUsuario" method="post" enctype="multipart/form-data">
         <input type="text" name="antigoNomeUsuario" placeholder="Digite o nome do usuario que deseja mudar">
         <input type="text" name="novoNomeUsuario" placeholder="Digite seu novo nome">
-        <input type="text" name="novoEmailUsuario" placeholder="Digite seu novo email">
-        <input type="text" name="novaSenhaUsuario" placeholder="Digite sua nova senha">
-        <input type="text" name="novoFotoUsuario" placeholder="Ponha sua nova foto de perfil">
+        <input type="email" name="novoEmailUsuario" placeholder="Digite seu novo email">
+        <input type="password" name="novaSenhaUsuario" placeholder="Digite sua nova senha">
+        <input type="file" name="novoFotoUsuario" accept=".jpeg, .jpg">
         <button type="submit">clica ai</button>
     </form>
     <h1>deletar usuario</h1>
     <form action="/deletarUsuario" method="post">
         <input type="text" name="antigoNomeUsuario" placeholder="Digite o nome do usuario que será deletado">
         <button type="submit">Clica ai dog</button>
+    </form>
+<h1>criar jogos</h1>
+<form action="/criarJogos" method="post" enctype="multipart/form-data">
+    <input type="text" name="nomeEmpresa" placeholder="Digite o nome da empresa que será a dona do jogo">
+    <input type="text" name="nomeJogos" placeholder="Digite o nome do seu jogo">
+    <input type="text" name="precoJogo" placeholder="Digite o preco do jogo">
+    <input type="text" name="descricaoJogo" placeholder="Digite uma breve descricao do jogo">
+    <input type="file" name="fotoJogo" accept=".jpeg, .jpg">
+    <input type="date" name="dataLJogo" placeholder="Digite a data de lancamento do jogo">
+    <button type="submit">clica ai</button>
+</form>
+<h1>atualizar jogos</h1>
+<form action="/atualizarJogos" method="post" enctype="multipart/form-data">
+    <input type="text" name="nomeAntigoJogo" placeholder="Digite o nome do jogo que será mudado">
+    <input type="text" name="nomeNovoJogo" placeholder="Digite o novo nome do seu jogo">
+    <input type="text" name="precoNovoJogo" placeholder="Digite o novo preco do jogo">
+    <input type="text" name="descricaoNovoJogo" placeholder="Digite uma nova breve descricao do jogo">
+    <input type="file" name="fotoNovoJogo" accept=".jpeg, .jpg">
+    <input type="date" name="dataLNovoJogo" placeholder="Digite a nova data de lancamento do jogo">
+    <button type="submit">clica ai</button>
+</form>
+
+<h1>deletar jogo</h1>
+    <form action="/deletarJogo" method="post">
+        <input type="text" name="antigoNomeJogo" placeholder="Digite o nome do jogo que será deletado">
+        <button type="submit">Clica ai dog</button>
+    </form>
+
+<h1>comprar jogos</h1>
+    <form action="/comprarJogo" method="post">
+        <input type="text" name="jogoComprado" placeholder="Digite o nome do jogo que será comprado">
+        <input type="text" name="comprador" placeholder="Digite o nome de quem está comprando">
+        <button type="submit">Clica ai</button>
+    </form>
+
+<h1>digite o nome do usuário para ver sua biblioteca:</h1>
+    <form action="/biblioteca" method="post">
+        <input type="text" name="nomeLib">
+        <button type="submit">clica ai</button>
     </form>
 </body>
 </html>
