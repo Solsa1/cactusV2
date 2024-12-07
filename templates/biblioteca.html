@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    {% if jogos |length > 0 %}
+    <h2>Biblioteca:</h2>
+    <ul class="list-group">
+      {% for jogo in jogos %}
+      <li class="list-group-item">
+        <strong>Nome:</strong> {{ jogo['nome'] }}<br />
+        <strong>Preco:</strong> {{ jogo['preco'] }}<br />
+        <strong>Descrição:</strong> {{ jogo['descricao'] }}<br />
+        <strong>Foto</strong>
+        <img
+          src="data:image/jpeg;base64,{{ jogo['foto'] }}"
+          class="img-fluid img-thumbnail"
+          width="100"
+          height="200"
+          onerror="this.style.display='none'"
+        /><br />
+        <strong>Data Lançamento</strong> {{ jogo['data_lancamento'] }}
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="text-muted">Nenhum jogo encontrado na biblioteca.</p>
+    {% endif %}
+    <a href="{{ url_for('home') }}">index</a>
+  </body>
+</html>
