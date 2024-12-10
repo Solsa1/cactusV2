@@ -17,7 +17,8 @@ database = 'database.db'
 @app.route('/login')
 def login():
     return render_template("login.html")
-    
+
+
 # Rota que devolve a tela de cadastro para adicionar os USUARIOS
 @app.route("/cadastro")
 def cadastro():
@@ -26,7 +27,7 @@ def cadastro():
 # Rota que inicia o codigo no index.html
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('landingpage.html')
 
 # Rota para facilitar o uso de url_for para voltar a pagina inicial
 @app.route('/home')
@@ -39,9 +40,28 @@ def landing():
     return render_template('landingpage.html')
 
 # rota para página usuario.html que tem a biblioteca do usuáriox'x
-@app.route('/biblioteca', methods=["GET"])
+@app.route('/minhaConta', methods=["GET"], endpoint="minhaConta")
 def lib():
-    return render_template('usuario.html')
+
+    emailUser = session.get("username", None)
+    
+    id = getIddUsuario(emailUser)
+    db = getDb()
+
+    cursor = db.cursor()
+    cursor.execute('SELECT * from usuario where id = ?', (id, ))
+    
+    usuariolog = cursor.fetchone()
+    usuario = dict(usuariolog)
+    print(usuario)
+    db.commit()
+    
+    #cursor.execute('SELECT * FROM biblioteca where id_user = ?', (id, ))
+    #biblioteca = dict(cursor.fetchone)
+
+    db.commit()
+
+    return render_template('usuario.html', user=usuario)
 
 
 # Função que PEGA o ID do USUARIO para checar a sua BIBLIOTECA
@@ -169,29 +189,41 @@ def init_db():
 # SESSION
 # Passivel a ser modificado para adicionar um novo parametro com a SENHA
 @app.route('/setcookie', methods=['POST'])
-def casa():
-    session['username'] = request.form['loginEmail']
+def setCookie():
+#def setCookie():
+    session['email'] = request.form['loginEmail']
     session['password'] = request.form['senhaEmail']
-    email = session['username']
+    email = session['email']
     password = session['password']
     identificador = getIddUsuario(email)
-    if identificador is not None:
+    if type(identificador) is not None:
         db = getDb()
         cursor = db.cursor()
         cursor.execute('SELECT * from usuario where id = ?', (identificador, ))
         usuariolog = cursor.fetchone()
+        usuario = dict(usuariolog)
         db.commit()
-        print(usuariolog)
+        print(usuario["nome"])
         print('vc ta legal')
+        return redirect(url_for('minhaConta'))
     else:
         print('erro em encontrar o usuario')
-    return render_template('login.html')
+        return redirect(url_for('login'))
+    
+
+        
 
 # Rota que confere se a SESSION está funcionando
+
+# TOTALMENTE DESNECESSÁRIO **** NA PRODUÇÃO ****
+# assinado: Idinaldo
+"""
 @app.route('/getcookie')
 def getVariable():
+#def getCookie():
     uname = session.get("username", None)
     return f"The username is {uname}"
+"""
 
 
 #Função para a CRIAÇÃO de EMPRESA
@@ -438,11 +470,19 @@ def comprarJogo():
 
 # Rota que ABRE a BIBLIOTECA do USUARIO LOGADO
 # PASSIVEL A MUDANÇAS
-@app.route('/biblioteca', methods=['POST'])
+@app.route('/biblioteca')
 def viewlib():
     nomeUser = request.form['nomeLib']
     jogos = verLib(nomeUser)
     return render_template('biblioteca.html', jogos=jogos)
+
+
+
+@app.route('/teste')
+def teste():
+    return render_template('teste-cookies.html', user=getIddUsuario())
+
+
 
 # if para inicar o flask, sem isso não funciona.
 if __name__ == "__main__":
