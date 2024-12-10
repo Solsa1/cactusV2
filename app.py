@@ -33,6 +33,17 @@ def home():
 def casa():
     return render_template('index.html')
 
+# rota pra landing page
+@app.route('/landing')
+def landing():
+    return render_template('landingpage.html')
+
+# rota para página usuario.html que tem a biblioteca do usuáriox'x
+@app.route('/biblioteca', methods=["GET"])
+def lib():
+    return render_template('usuario.html')
+
+
 # Função que PEGA o ID do USUARIO para checar a sua BIBLIOTECA
 # SOMENTE deve ser USADA para MOSTRAR os JOGOS da BIBLIOTECA do USUARIO LOGADO
 # PASSIVEL DE MUDANÇAS
