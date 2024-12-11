@@ -13,6 +13,10 @@ jogos = [] # Váriavel para mostrar os jogos dentro da biblioteca do usuario
 
 database = 'database.db'
 
+@app.route('/compras')
+def compras():
+    return render_template('compras.html')
+
 # Rota que devolve a tela de login para logar os USUARIOS
 @app.route('/login')
 def login():
@@ -39,29 +43,37 @@ def casa():
 def landing():
     return render_template('landingpage.html')
 
+@app.route('/usuario')
+def usuario():
+    return render_template('usuario.html')
+
 # rota para página usuario.html que tem a biblioteca do usuáriox'x
 @app.route('/minhaConta', methods=["GET"], endpoint="minhaConta")
 def lib():
 
-    emailUser = session.get("username", None)
-    
-    id = getIddUsuario(emailUser)
-    db = getDb()
+    emailUser = session.get("email", None)
 
-    cursor = db.cursor()
-    cursor.execute('SELECT * from usuario where id = ?', (id, ))
     
-    usuariolog = cursor.fetchone()
-    usuario = dict(usuariolog)
-    print(usuario)
-    db.commit()
-    
+    identificador = getIddUsuario(emailUser)
+    if identificador is None:
+        flash('usuario nao encontrado')
+        return redirect(url_for('login'))
+    else:
+
+        db = getDb()
+
+        cursor = db.cursor()
+        cursor.execute('SELECT * from usuario where id = ?', (identificador, ))
+
+        usuariolog = dict(cursor.fetchone())
+        print(usuariolog)
+        db.commit()
+
     #cursor.execute('SELECT * FROM biblioteca where id_user = ?', (id, ))
     #biblioteca = dict(cursor.fetchone)
 
-    db.commit()
 
-    return render_template('usuario.html', user=usuario)
+    return render_template('usuario.html', user=usuariolog)
 
 
 # Função que PEGA o ID do USUARIO para checar a sua BIBLIOTECA
@@ -144,7 +156,11 @@ def getIddUsuario(email):
         cursor = db.cursor()
         cursor.execute('SELECT id FROM usuario WHERE email = ?', (email, ))
         usuario1 = cursor.fetchone()
-        return usuario1[0]
+        if usuario1 is None:
+            return None
+        else:
+            return usuario1[0]
+    
     except sqlite3.Error as e:
         print('Erro para conseguir o id do usuario desejado')
         print(e)
@@ -447,12 +463,11 @@ def deletarJogo():
 
 # Função para efetuar COMPRAS de JOGOS
 # Possivelmente adicionar uma API para efetuação de pagamento
-@app.route('/comprarJogo', methods=['POST'])
-def comprarJogo():
+@app.route('/comprarJogo/<comprador>', methods=['POST'])
+def comprarJogo(comprador):
     jogocomprado = request.form['jogoComprado']
     identificador = getIdJogo(jogocomprado)
-    userComprador = request.form['comprador']
-    idenComp = getIdUsuario(userComprador)
+    idenComp = getIdUsuario(comprador)
     idenVen = getIdEmpresaJogo(jogocomprado)
     try:
         db = getDb()
@@ -465,14 +480,13 @@ def comprarJogo():
         print(e)
     finally:
         db.close()
-        return redirect('/')
+        return render_template('index.html')
 
 
 # Rota que ABRE a BIBLIOTECA do USUARIO LOGADO
 # PASSIVEL A MUDANÇAS
-@app.route('/biblioteca')
-def viewlib():
-    nomeUser = request.form['nomeLib']
+@app.route('/biblioteca/<nomeUser>')
+def biblioteca(nomeUser):
     jogos = verLib(nomeUser)
     return render_template('biblioteca.html', jogos=jogos)
 
