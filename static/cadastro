@@ -1,0 +1,13 @@
+body{
+    background-image: url("cactus3.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+h4{
+    color: aliceblue;
+}
+
+html, body{
+    font-size: 30px;
+}
