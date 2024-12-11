@@ -34,3 +34,14 @@ create table if not exists biblioteca(
             FOREIGN KEY(id_user) REFERENCES usuario(id)
 );
 
+create table if not exists vendas(
+            id integer PRIMARY KEY AUTOINCREMENT,
+            id_jogo INTEGER,
+            id_comprador INTEGER,
+            id_vendedor INTEGER,
+            FOREIGN KEY(id_jogo) REFERENCES jogo(id),
+            FOREIGN KEY(id_comprador) REFERENCES usuario(id),
+            FOREIGN KEY(id_vendedor) REFERENCES empresa(id)
+);
+
+
