@@ -1,5 +1,5 @@
-body{
-    background-image: url("astronauta.png");
+ body{
+    background-image: url("Cactu.png");
     background-repeat: no-repeat;
     background-size: cover;   
 }
@@ -19,5 +19,5 @@ h4{
 }
 
 html, body{
-    font-size: 50px;
+    font-size: 45px;
 }
