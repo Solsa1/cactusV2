@@ -19,7 +19,7 @@ database = 'database.db'
 
 @app.route('/atualizarUsuario')
 def atualizarUsuario():
-    return render_template('/user/atualizarUsuario.html', user=session)
+    return render_template('/user/atualizarUsuario.html')
 
 @app.route('/comprasUsuario')
 def comprasUsuario():
@@ -39,57 +39,74 @@ def cadastroUsuario():
 def deletarUsuario():
     return render_template('/user/deletar.html')
 
+@app.route('/loginUsuario')
+def loginUsuario():
+    return render_template('/user/login.html')
+
+
 #------------------------------------------------------------------------------------------------------------------
 # Rota que inicia o codigo no index.html
 @app.route('/')
 def home():
-    return render_template('landingpage.html')
-
-# Rota para facilitar o uso de url_for para voltar a pagina inicial
-@app.route('/home')
-def casa():
     return render_template('index.html')
 
-# rota pra landing page
 @app.route('/landing')
 def landing():
-    return render_template('landingpage.html')
-
-@app.route('/login')
-def login():
-    return render_template('login.html')
-
+    return render_template('index.html')
 
 # EMPRESA
 #-------------------------------------------------------------------------------------------
 @app.route('/cadastroEmpresa')
 def cadastroEmpresa():
-    return render_template('empresa/cadastrar.html')
+    return render_template('/empresa/cadastrar.html')
+
+@app.route('/loginEmpresa')
+def loginEmpresa():
+    return render_template('/empresa/login.html')
 
 @app.route('/empresa')
 def empresa():
-    return render_template('empresa/main.html', empresa=session)
+    return render_template('/empresa/main.html', empresa=session)
 
 @app.route('/atualizarEmpresa')
 def atualizarEmpresa():
-    return render_template('empresa/atualizar.html')
+    return render_template('/empresa/atualizar.html')
 
 @app.route('/deletarEmpresa')
 def deletarEmpresa():
-    return render_template('empresa/deletar.html')
+    return render_template('/empresa/deletar.html')
 
+#JOGOS
+#-------------------------------------------------------------------------------------------
+@app.route('/telaCadastrarJogo')
+def telaCadastrarJogo():
+    return render_template('/jogos/cadastrar.html')
+
+@app.route('/telaAtualizarJogo')
+def telaAtualizarJogo():
+    return render_template('/jogos/atualizar.html')
+
+@app.route('/telaDeletarJogo')
+def telaDeletarJogo():
+    return render_template('/jogos/deletar.html')
+
+@app.route('/telaJogosAdicionados')
+def telaJogosAdicionados():
+    jogos = verJogosAd(session['nome'])
+    return render_template('/jogos/jogosAdicionados.html', jogos = jogos)
+#-------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------
 
 # rota para página usuario.html que tem a biblioteca do usuáriox'x
-@app.route('/minhaConta', methods=["GET"], endpoint="minhaConta")
+@app.route('/minhaContaUsuario', methods=["GET"], endpoint="minhaConta")
 def lib():
     emailUser = session['email']
-    print(session)
+    senhaUser = session['senha']
     
-    identificador = getIddUsuario(emailUser)
+    identificador = getIddUsuario(emailUser, senhaUser)
     if identificador is None:
         flash('usuario nao encontrado')
-        return redirect(url_for('login'))
+        return redirect(url_for('loginUsuario'))
     else:
 
         db = getDb()
@@ -101,11 +118,29 @@ def lib():
         print(usuariolog)
         db.commit()
 
-    #cursor.execute('SELECT * FROM biblioteca where id_user = ?', (id, ))
-    #biblioteca = dict(cursor.fetchone)
-
 
     return render_template('/user/usuario.html', user=dict(usuariolog))
+
+@app.route('/minhaContaEmpresa', methods=["GET"], endpoint="minhaContaE")
+def lib():
+    emailempresa = session['email']
+    senhaempresa = session['senha']
+    
+    identificador = getIddEmpresa(emailempresa, senhaempresa)
+    if identificador is None:
+        flash('usuario nao encontrado')
+        return redirect(url_for('loginEmpresa'))
+    else:
+
+        db = getDb()
+
+        cursor = db.cursor()
+        cursor.execute('SELECT * from empresa where id = ?', (identificador, ))
+
+        empresalog = cursor.fetchone()
+        db.commit()
+
+    return render_template('/empresa/main.html', empresa = dict(empresalog))
 
 
 # Função que PEGA o ID do USUARIO para checar a sua BIBLIOTECA
@@ -117,6 +152,36 @@ def verLib (nomeUser):
         db = getDb()
         cursor = db.cursor()
         cursor.execute('SELECT id_jogo FROM biblioteca WHERE id_user = ?', (identificador,))
+        jogo_ids = cursor.fetchall()
+        jogos = []
+        for jogo_id in jogo_ids:
+            cursor.execute('SELECT * FROM jogo WHERE id = ?', (jogo_id[0],))
+            jogo = dict(cursor.fetchone())
+            if jogo['foto'] != None:
+                jogo['foto'] = base64.b64encode(io.BytesIO(jogo['foto']).getvalue()).decode()
+            jogos.append(jogo)
+        db.commit()
+        return jogos
+    except sqlite3.Error as e:
+        print('Falha na busca')
+        print(e)
+    finally:
+        db.close()
+
+# Rota que ABRE a BIBLIOTECA do USUARIO LOGADO
+# PASSIVEL A MUDANÇAS
+@app.route('/bibliotecaUsuario')
+def bibliotecaUsuario():
+    jogos = verLib(session['nome'])
+    return render_template('/user/biblioteca.html', jogos=jogos)
+
+
+def verJogosAd(nomeEmpresa):
+    identificador = getIdEmpresa(nomeEmpresa)
+    try:
+        db = getDb()
+        cursor = db.cursor()
+        cursor.execute('SELECT id FROM jogo WHERE id_empre = ?', (identificador, ))
         jogo_ids = cursor.fetchall()
         jogos = []
         for jogo_id in jogo_ids:
@@ -170,7 +235,7 @@ def getIdJogo(nome):
     try:
         db = getDb()
         cursor = db.cursor()
-        cursor.execute('SELECT id FROM jogo WHERE nome = ?', (nome,))
+        cursor.execute('SELECT id FROM jogo WHERE nome = ?', (nome, ))
         jogo = cursor.fetchone()
         return jogo[0]
     except sqlite3.Error as e:
@@ -182,11 +247,11 @@ def getIdJogo(nome):
 
 #Função que adquire o ID do USUARIO com base no seu EMAIL
 #Passivel a ser adicionado um novo parametro com a SENHA
-def getIddUsuario(email):
+def getIddUsuario(email, senha):
     try:
         db = getDb()
         cursor = db.cursor()
-        cursor.execute('SELECT id FROM usuario WHERE email = ?', (email, ))
+        cursor.execute('SELECT id FROM usuario WHERE email = ? AND senha = ?', (email, senha))
         usuario1 = cursor.fetchone()
         if usuario1 is None:
             return None
@@ -195,6 +260,19 @@ def getIddUsuario(email):
     
     except sqlite3.Error as e:
         print('Erro para conseguir o id do usuario desejado')
+        print(e)
+    finally:
+        db.close()
+
+def getIddEmpresa(email, senha):
+    try:
+        db = getDb()
+        cursor = db.cursor()
+        cursor.execute('SELECT id FROM empresa WHERE email =? AND senha = ?', (email, senha))
+        empresa1 = cursor.fetchone()
+        return empresa1[0]
+    except sqlite3.Error as e:
+        print('Erro para conseguir o id da empresa desejado')
         print(e)
     finally:
         db.close()
@@ -236,14 +314,11 @@ def init_db():
 
 # SESSION
 # Passivel a ser modificado para adicionar um novo parametro com a SENHA
-@app.route('/setcookie', methods=['POST'])
-def setCookie():
-#def setCookie():
-    '''session['email'] = request.form['loginEmail']
-    session['password'] = request.form['senhaEmail']
-    password = session['password']'''
+@app.route('/setcookieUsuario', methods=['POST'])
+def setCookieUsuario():
     email = request.form['loginEmail']
-    identificador = getIddUsuario(email)
+    senha = request.form['senhaEmail']
+    identificador = getIddUsuario(email, senha)
     if type(identificador) is not None:
         db = getDb()
         cursor = db.cursor()
@@ -252,28 +327,34 @@ def setCookie():
         usuario = dict(usuariolog)
         for i in usuario.keys():
             session[i] = usuario[i]
-        print(session['nome'])
         db.commit()
         return redirect(url_for('minhaConta'))
     else:
         print('erro em encontrar o usuario')
-        return redirect(url_for('login'))
+        return redirect(url_for('loginUsuario'))
     
 
-        
+@app.route('/setcookieEmpresa', methods=['POST'])
+def setCookieEmpresa():
+    email = request.form['loginEmail']
+    senha = request.form['senhaEmail']
+    identificador = getIddEmpresa(email, senha)
+    if type(identificador) is not None:
+        db = getDb()
+        cursor = db.cursor()
+        cursor.execute('SELECT * from empresa where id = ?', (identificador, ))
+        empresalog = cursor.fetchone()
+        empresa= dict(empresalog)
+        for i in empresa.keys():
+            session[i] = empresa[i]
+        db.commit()
+        return redirect(url_for('minhaContaE'))
+    else:
+        print('erro em encontrar o usuario')
+        return redirect(url_for('loginEmpresa'))
+    
 
-# Rota que confere se a SESSION está funcionando
-
-# TOTALMENTE DESNECESSÁRIO **** NA PRODUÇÃO ****
-# assinado: Idinaldo
-"""
-@app.route('/getcookie')
-def getVariable():
-#def getCookie():
-    uname = session.get("username", None)
-    return f"The username is {uname}"
-"""
-
+    
 
 #Função para a CRIAÇÃO de EMPRESA
 #Deve ser utilizada SOMENTE na tela de CADASTRO de EMPRESAS
@@ -290,19 +371,18 @@ def criarEmpresa():
         cursor = db.cursor()
         cursor.execute('INSERT INTO empresa(nome, email, senha, logo, descricao) VALUES (?, ?, ?, ?, ?)', (nome, email, senha, imagem, descricao))
         db.commit()
-        return 
     except sqlite3.Error as e:
         print('Houve um erro na inserção da empresa')
         print(e)
     finally:
         db.close()
-
+        return redirect('/')
 
 # Função que ATUALIZA todos os DADOS DE EMRPRESA
 # SOMENTE deve ser utilizada para EMPRESAS logadas no mommento, entender como faz isso utilizando SESSION
 @app.route('/atualizarEmpre', methods=['POST'])
 def atualizarEmpre():
-    nome_antigo = request.form['antigoNomeEmpresa']
+    nome_antigo = session['nome']
     identificador = getIdEmpresa(nome_antigo)
     nome_novo = request.form['novoNomeEmpresa']
     email_novo = request.form['novoEmailEmpresa']
@@ -323,14 +403,14 @@ def atualizarEmpre():
         print(e)
     finally:
         db.close()
-        return redirect('/')
+        return redirect(url_for('empresa'))
 
 
 # Função que DELETA todos os dados de EMPRESAS
 # SOMENTE deve ser usada por EMPRESAS logadas no momento
 @app.route('/deletarEmpre', methods=['POST'])
 def deletarEmpre():
-    nome_antigo = request.form['antigoNomeEmpresa']
+    nome_antigo = session['nome']
     identificador = getIdEmpresa(nome_antigo)
     try:
         db = getDb()
@@ -385,21 +465,22 @@ def atualizarUser():
         cursor = db.cursor()
         if identificador is not None:
             cursor.execute('UPDATE usuario SET nome = ?, email = ?, senha =?, foto =? WHERE id=?', (nome_novo, email_novo, senha_nova, imagem, identificador))
-            db.commit()
-            return render_template('usuario.html')
         else:
             print('Falha na atualização dos dados do usuario')
-        db.close()
+        db.commit()
     except sqlite3.Error as e:
         print('Houve um erro na atualização dos dados')
         print(e)
+    finally:
+        db.close()
+        return redirect(url_for('usuario'))
 
 
 
 
 # Função que DELETA USUARIOS
 # SOMENTE deve ser USADA por USUARIOS LOGADOS no momento
-app.route('/deletarUser', methods=['POST'])
+@app.route('/deletarUser', methods=['POST'])
 def deletarUser():
     nome_antigo = session['nome']
     identificador = getIdUsuario(nome_antigo)
@@ -423,7 +504,7 @@ def deletarUser():
 # PASSIVEL A MUDANÇAS
 @app.route('/criarJogos', methods=['POST'])
 def criarJogos():
-    nome_empresa = request.form['nomeEmpresa']
+    nome_empresa = session['nome']
     identificador = getIdEmpresa(nome_empresa)
     nome_jogo = request.form['nomeJogos']
     preco_jogo = request.form['precoJogo']
@@ -444,13 +525,15 @@ def criarJogos():
         print(e)
     finally:
         db.close()
-        return redirect('/')
+        return redirect(url_for('empresa'))
 
 # Função que ATUALIZA JOGOS
 # SOMENTE deve ser UTILIZADA por EMPRESAS LOGADAS
 # PASSIVEL A MUDANÇAS
 @app.route('/atualizarJogos', methods=['POST'])
 def atualizarJogos():
+    empresa = session['nome']
+    id_empresa = getIdEmpresa(empresa)
     nome_antigo = request.form['nomeAntigoJogo']
     identificador = getIdJogo(nome_antigo)
     nome_novo = request.form['nomeNovoJogo']
@@ -463,7 +546,7 @@ def atualizarJogos():
         db = getDb()
         cursor = db.cursor()
         if identificador is not None:
-            cursor.execute('UPDATE jogo SET nome = ?, preco = ?, descricao =?, foto =?, data_lancamento =? WHERE id=?', (nome_novo, preco_novo, descricao_nova, imagem, dataL_nova, identificador))
+            cursor.execute('UPDATE jogo SET nome = ?, preco = ?, descricao =?, foto =?, data_lancamento =? WHERE id=? AND id_empre = ?', (nome_novo, preco_novo, descricao_nova, imagem, dataL_nova, identificador, id_empresa))
         else:
             print('Falha na atualização dos dados do jogo')
         db.commit()
@@ -472,20 +555,22 @@ def atualizarJogos():
         print(e)
     finally:
         db.close()
-        return redirect('/')
+        return redirect(url_for('empresa'))
 
 # Função que DELETA JOGOS
 # SOMENTE deve ser UTILIZADA por EMPRESAS LOGADAS
 # PASSIVEL A MUDANÇAS
 @app.route('/deletarJogo', methods=['POST'])
 def deletarJogo():
+    empresa = session['nome']
+    id_empresa = getIdEmpresa(empresa)
     name = request.form['antigoNomeJogo']
     identificador = getIdJogo(name)
     try:
         db = getDb()
         cursor = db.cursor()
         if identificador is not None:
-            cursor.execute('DELETE FROM jogo WHERE id =?', (identificador, ))
+            cursor.execute('DELETE FROM jogo WHERE id =? AND id_empre = ?', (identificador, id_empresa))
         else:
             print('Houve um erro na remoção do usuario')
         db.commit()
@@ -494,7 +579,7 @@ def deletarJogo():
         print(e)
     finally:
         db.close()
-        return redirect('/')
+        return redirect(url_for('empresa'))
 
 # Função para efetuar COMPRAS de JOGOS
 # Possivelmente adicionar uma API para efetuação de pagamento
@@ -517,15 +602,6 @@ def comprarJogo():
         print('Erro ao realizar compra')
         print(e)
         return render_template('/user/compras.html', comprador=session['nome'])
-
-
-# Rota que ABRE a BIBLIOTECA do USUARIO LOGADO
-# PASSIVEL A MUDANÇAS
-@app.route('/bibliotecaUsuario')
-def bibliotecaUsuario():
-    jogos = verLib(session['nome'])
-    return render_template('/user/biblioteca.html', jogos=jogos)
-
 
 
 @app.route('/teste')

@@ -3,16 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Atualizar Usuário</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>atualizar usuario</h1>
-    <form action="/atualizarUsuario" method="post" enctype="multipart/form-data">
-        <input type="text" name="novoNomeUsuario" placeholder="Digite seu novo nome" defaultValue = "{{ user['nome']}}">
-        <input type="email" name="novoEmailUsuario" placeholder="Digite seu novo email" defaultValue = "{{ user['email']}}">
-        <input type="password" name="novaSenhaUsuario" placeholder="Digite sua nova senha" defaultValue="{{ user['senha'] }}">
-        <input type="file" name="novoFotoUsuario" accept=".jpeg, .jpg" defaultValue="{{ user['foto'] }}">
-        <button type="submit">clica ai</button>
-    </form>
+<body class="bg-light">
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="card shadow p-4" style="width: 100%; max-width: 500px;">
+            <h2 class="text-center text-primary mb-4">Atualizar Usuário</h2>
+            <form action="/atualizarUser" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="novoNomeUsuario" class="form-label">Novo Nome</label>
+                    <input 
+                        type="text" 
+                        id="novoNomeUsuario" 
+                        name="novoNomeUsuario" 
+                        class="form-control" 
+                        placeholder="Digite seu novo nome" 
+                        required>
+                </div>
+                <div class="mb-3">
+                    <label for="novoEmailUsuario" class="form-label">Novo Email</label>
+                    <input 
+                        type="email" 
+                        id="novoEmailUsuario" 
+                        name="novoEmailUsuario" 
+                        class="form-control" 
+                        placeholder="Digite seu novo email" 
+                        required>
+                </div>
+                <div class="mb-3">
+                    <label for="novaSenhaUsuario" class="form-label">Nova Senha</label>
+                    <input 
+                        type="password" 
+                        id="novaSenhaUsuario" 
+                        name="novaSenhaUsuario" 
+                        class="form-control" 
+                        placeholder="Digite sua nova senha" 
+                        required>
+                </div>
+                <div class="mb-3">
+                    <label for="novoFotoUsuario" class="form-label">Nova Foto</label>
+                    <input 
+                        type="file" 
+                        id="novoFotoUsuario" 
+                        name="novoFotoUsuario" 
+                        class="form-control" 
+                        accept=".jpeg, .jpg">
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Atualizar</button>
+            </form>
+            <div class="text-center mt-3">
+                <a href="{{ url_for('usuario') }}" class="btn btn-link">Voltar para a tela de Usuário</a>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

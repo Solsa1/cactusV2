@@ -3,17 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>cadastro empresa</title>
+    <title>Cadastro de Empresa</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>criar empresa</h1>
-    <form action="/criarEmpresa" method="post" enctype="multipart/form-data">
-        <input type="text" name="nomeEmpresa" class="form-control" placeholder="Digite o nome da empresa" required>
-        <input type="email" name="emailEmpresa" class="form-control" placeholder="Digite o email da empresa" required>
-        <input type="password" name="senhaEmpresa" class="form-control" placeholder="Digite uma senha para a empresa" required>
-        <input type="file" name="logo" class="form-control" accept=".jpeg, .jpg">
-        <input type="text" name="descricaoEmpresa" class="form-control" placeholder="Digite uma breve descrição da empresa" required>
-        <button type="submit">clica ai</button>
-    </form>
+<body class="bg-light">
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="card shadow p-4" style="width: 100%; max-width: 500px;">
+            <h2 class="text-center mb-4">Criar Empresa</h2>
+            <form action="/criarEmpresa" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="nomeEmpresa" class="form-label">Nome da Empresa</label>
+                    <input type="text" id="nomeEmpresa" name="nomeEmpresa" class="form-control" placeholder="Digite o nome da empresa" required>
+                </div>
+                <div class="mb-3">
+                    <label for="emailEmpresa" class="form-label">Email</label>
+                    <input type="email" id="emailEmpresa" name="emailEmpresa" class="form-control" placeholder="Digite o email da empresa" required>
+                </div>
+                <div class="mb-3">
+                    <label for="senhaEmpresa" class="form-label">Senha</label>
+                    <input type="password" id="senhaEmpresa" name="senhaEmpresa" class="form-control" placeholder="Digite uma senha para a empresa" required>
+                </div>
+                <div class="mb-3">
+                    <label for="logo" class="form-label">Logo da Empresa</label>
+                    <input type="file" id="logo" name="logo" class="form-control" accept=".jpeg, .jpg">
+                </div>
+                <div class="mb-3">
+                    <label for="descricaoEmpresa" class="form-label">Descrição</label>
+                    <textarea id="descricaoEmpresa" name="descricaoEmpresa" class="form-control" placeholder="Digite uma breve descrição da empresa" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Cadastrar Empresa</button>
+            </form>
+            <hr class="my-4">
+            <p class="text-center">
+                <a href="{{url_for('loginUsuario')}}" class="text-decoration-none">É usuário? Clique aqui para acessar sua conta</a>
+            </p>
+        </div>
+    </div>
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

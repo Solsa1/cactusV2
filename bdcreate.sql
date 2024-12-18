@@ -6,7 +6,8 @@ create table if not exists empresa(
             logo TEXT,
             descricao TEXT NOT NULL
 );
-    
+
+
 create table if not exists jogo(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             id_empre INTEGER,
@@ -17,6 +18,7 @@ create table if not exists jogo(
             data_lancamento DATE,
             FOREIGN KEY(id_empre) REFERENCES empresa(id)
 );
+
     
 create table if not exists usuario(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -26,6 +28,7 @@ create table if not exists usuario(
             foto TEXT NOT NULL
 );
 
+
 create table if not exists biblioteca(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             id_jogo INTEGER,
@@ -33,6 +36,7 @@ create table if not exists biblioteca(
             FOREIGN KEY(id_jogo) REFERENCES jogo(id),
             FOREIGN KEY(id_user) REFERENCES usuario(id)
 );
+
 
 create table if not exists vendas(
             id integer PRIMARY KEY AUTOINCREMENT,
