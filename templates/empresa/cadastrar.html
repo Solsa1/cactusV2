@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cadastro empresa</title>
+</head>
+<body>
+    <h1>criar empresa</h1>
+    <form action="/criarEmpresa" method="post" enctype="multipart/form-data">
+        <input type="text" name="nomeEmpresa" class="form-control" placeholder="Digite o nome da empresa" required>
+        <input type="email" name="emailEmpresa" class="form-control" placeholder="Digite o email da empresa" required>
+        <input type="password" name="senhaEmpresa" class="form-control" placeholder="Digite uma senha para a empresa" required>
+        <input type="file" name="logo" class="form-control" accept=".jpeg, .jpg">
+        <input type="text" name="descricaoEmpresa" class="form-control" placeholder="Digite uma breve descrição da empresa" required>
+        <button type="submit">clica ai</button>
+    </form>
+</body>
+</html>

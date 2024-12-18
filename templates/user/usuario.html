@@ -1,0 +1,52 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body >
+    
+    <h1>Bem-vind@ de volta, {{user['nome']}}</h1>
+    
+    <div id="divBusca">
+        <input type="text" id="txtBusca" placeholder="Buscar Jogos"/>
+    </div>
+    <h4>Sua Biblioteca:</h4>
+    <button type="button">Biblioteca</button>
+    <br>
+    <h4>Clique aqui para comprar um jogo!</h4>
+    <button type="button">comprar...</button>
+</body>
+</html>-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Principal</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container my-5">
+        <!-- Saudação -->
+        <div class="text-center">
+            <h1>Bem-vind@ de volta, {{ user['nome'] }}!</h1>
+            <p class="text-muted">Estamos felizes em ter você de volta.</p>
+        </div>
+
+        <!-- Botões de navegação -->
+        <div class="d-flex justify-content-center mt-4">
+            <a href="{{ url_for('bibliotecaUsuario') }}" class="btn btn-primary mx-2">Acessar Biblioteca</a>
+            <a href="{{ url_for('comprasUsuario') }}" class="btn btn-success mx-2">Comprar Jogos</a>
+            <a href="{{ url_for('atualizarUsuario')}}" class="btn btn-warning mx-2">Atualizar Conta</a>
+            <a href="{{ url_for('deletarUsuario') }}">Deletar conta</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

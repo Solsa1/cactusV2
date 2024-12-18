@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atualizar empresa</title>
+</head>
+<body>
+    <h1>atualizar empresa</h1>
+    <form action="/atualizarEmpresa" method="post" enctype="multipart/form-data">
+        <input type="text" name="antigoNomeEmpresa" placeholder="Digite o antigo nome da empresa">
+        <input type="text" name="novoNomeEmpresa" class="form-control" placeholder="Digite o novo nome da empresa" required>
+        <input type="email" name="novoEmailEmpresa" class="form-control" placeholder="Digite o novo email da empresa" required>
+        <input type="password" name="novaSenhaEmpresa" class="form-control" placeholder="Digite uma nova senha para a empresa" required>
+        <input type="file" name="novoLogo" class="form-control" accept=".jpeg, .jpg">
+        <input type="text" name="novaDescricaoEmpresa" class="form-control" placeholder="Digite uma nova e breve descrição da empresa" required>
+        <button type="submit">clica ai dog</button>
+    </form>
+</body>
+</html>

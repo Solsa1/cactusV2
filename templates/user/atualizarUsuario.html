@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>atualizar usuario</h1>
+    <form action="/atualizarUsuario" method="post" enctype="multipart/form-data">
+        <input type="text" name="novoNomeUsuario" placeholder="Digite seu novo nome" defaultValue = "{{ user['nome']}}">
+        <input type="email" name="novoEmailUsuario" placeholder="Digite seu novo email" defaultValue = "{{ user['email']}}">
+        <input type="password" name="novaSenhaUsuario" placeholder="Digite sua nova senha" defaultValue="{{ user['senha'] }}">
+        <input type="file" name="novoFotoUsuario" accept=".jpeg, .jpg" defaultValue="{{ user['foto'] }}">
+        <button type="submit">clica ai</button>
+    </form>
+</body>
+</html>

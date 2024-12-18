@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+</head>
+<body>
+    <h1>Cadastro Usuario</h1>
+
+    <form action="/criarUsuario" method="post" enctype="multipart/form-data">
+        <input type="text" name="nomeUsuario" placeholder="Digite seu nome"> <br> <br>
+        <input type="email" name="emailUsuario" placeholder="Digite seu email"> <br> <br>
+        <input type="password" name="senhaUsuario" placeholder="Digite suia senha"> <br> <br>
+        <input type="file" name="fotoUsuario" accept=".jpeg, .jpg"> <br> <br>
+        <button type="submit">Fazer Cadastro</button>
+    </form>
+    <p> É um desenvolvedor?</p>
+    <p> <a href=" {{ url_for ('cadastroEmpresa') }}"> Crie a sua conta aqui </p>
+</body>
+</html>
