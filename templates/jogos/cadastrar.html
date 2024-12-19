@@ -1,24 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <h1>criar jogos</h1>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Criar Jogo</title>
+    <!-- Incluindo o Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container mt-5">
+      <!-- Título -->
+      <h1 class="text-center mb-4">Criar Novo Jogo</h1>
 
-<form action="/criarJogos" method="post" enctype="multipart/form-data">
-    <!--<input type="text" name="nomeEmpresa" placeholder="Digite o nome da empresa que será a dona do jogo">-->
-    <input type="text" name="nomeJogos" placeholder="Digite o nome do seu jogo">
-    <input type="text" name="precoJogo" placeholder="Digite o preco do jogo">
-    <input type="text" name="descricaoJogo" placeholder="Digite uma breve descricao do jogo">
-    <input type="file" name="fotoJogo" accept=".jpeg, .jpg">
-    <input type="date" name="dataLJogo" placeholder="Digite a data de lancamento do jogo">
-    <button type="submit">clica ai</button>
-</form>
+      <!-- Formulário -->
+      <form action="/criarJogos" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="nomeJogos">Nome do Jogo</label>
+          <input type="text" class="form-control" id="nomeJogos" name="nomeJogos" placeholder="Digite o nome do seu jogo" required>
+        </div>
 
-</body>
+        <div class="form-group">
+          <label for="precoJogo">Preço do Jogo</label>
+          <input type="text" class="form-control" id="precoJogo" name="precoJogo" placeholder="Digite o preço do jogo" required>
+        </div>
+
+        <div class="form-group">
+          <label for="descricaoJogo">Descrição do Jogo</label>
+          <input type="text" class="form-control" id="descricaoJogo" name="descricaoJogo" placeholder="Digite uma breve descrição do jogo" required>
+        </div>
+
+        <div class="form-group">
+          <label for="fotoJogo">Foto do Jogo</label>
+          <input type="file" class="form-control-file" id="fotoJogo" name="fotoJogo" accept=".jpeg, .jpg" required>
+        </div>
+
+        <div class="form-group">
+          <label for="dataLJogo">Data de Lançamento</label>
+          <input type="date" class="form-control" id="dataLJogo" name="dataLJogo" required>
+        </div>
+
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary">Criar Jogo</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Incluindo o JavaScript do Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
 </html>
-
-
