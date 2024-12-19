@@ -1,16 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Deletar Usuário</title>
+  <!-- Incluindo o Bootstrap -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-  <h1>deletar usuario</h1>
-  <form action="/deletarUser" method="post">
-      <h1>voce tem certeza?</h1>
-      <button type="submit">sim</button>
-  </form>
-  <a href="{{url_for('usuario')}}">Voltar para tela de Usuário</a>
+  <div class="container mt-5">
+    <!-- Título principal -->
+    <h1 class="text-center">Deletar Usuário</h1>
+
+    <!-- Formulário -->
+    <form action="/deletarUser" method="post">
+      <div class="alert alert-warning text-center" role="alert">
+        <h4 class="alert-heading">Você tem certeza?</h4>
+        <p>Essa ação não pode ser desfeita. Se deseja continuar, clique em "Sim".</p>
+        <hr>
+        <div class="text-center">
+          <!-- Botão de confirmação -->
+          <button type="submit" class="btn btn-danger">Sim</button>
+        </div>
+      </div>
+    </form>
+
+    <!-- Link de voltar -->
+    <div class="text-center mt-3">
+      <a href="{{url_for('usuario')}}" class="btn btn-secondary">Voltar para a tela de Usuário</a>
+    </div>
+  </div>
+
+  <!-- Incluindo o JavaScript do Bootstrap -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
