@@ -1,14 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deletar empresa</title>
+    <title>Deletar Empresa</title>
+    <!-- Incluindo o Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>deletar empresa</h1>
-    <form action="/deletarEmpre" method="post">
-        <button type="submit">tem certeza?</button>
-    </form>
+    <div class="container mt-5">
+        <!-- Título -->
+        <h1 class="text-center mb-4">Deletar Empresa</h1>
+
+        <!-- Formulário -->
+        <form action="/deletarEmpre" method="post">
+            <div class="text-center">
+                <p class="alert alert-warning">Tem certeza de que deseja deletar esta empresa?</p>
+                <button type="submit" class="btn btn-danger">Sim, deletar</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Incluindo o JavaScript do Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
