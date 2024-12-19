@@ -1,34 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Biblioteca de Jogos</title>
+    <!-- Incluindo o Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   </head>
   <body>
-    {% if jogos |length > 0 %}
-    <h2>Biblioteca:</h2>
-    <ul class="list-group">
-      {% for jogo in jogos %}
-      <li class="list-group-item">
-        <strong>Nome:</strong> {{ jogo['nome'] }}<br />
-        <strong>Preco:</strong> {{ jogo['preco'] }}<br />
-        <strong>Descrição:</strong> {{ jogo['descricao'] }}<br />
-        <strong>Foto</strong>
-        <img
-          src="data:image/jpeg;base64,{{ jogo['foto'] }}"
-          class="img-fluid img-thumbnail"
-          width="100"
-          height="200"
-          onerror="this.style.display='none'"
-        /><br />
-        <strong>Data Lançamento</strong> {{ jogo['data_lancamento'] }}
-      </li>
-      {% endfor %}
-    </ul>
-    {% else %}
-    <p class="text-muted">Nenhum jogo encontrado na biblioteca.</p>
-    {% endif %}
-    <a href="{{ url_for('empresa') }}">index</a>
+    <div class="container mt-5">
+      <!-- Verificando se há jogos na biblioteca -->
+      {% if jogos |length > 0 %}
+        <h2 class="text-center mb-4">Biblioteca de Jogos</h2>
+        <ul class="list-group">
+          {% for jogo in jogos %}
+            <li class="list-group-item mb-3">
+              <div class="row">
+                <div class="col-md-4">
+                  <img src="data:image/jpeg;base64,{{ jogo['foto'] }}" class="img-fluid img-thumbnail" width="150" height="250" onerror="this.style.display='none'" />
+                </div>
+                <div class="col-md-8">
+                  <h5><strong>Nome:</strong> {{ jogo['nome'] }}</h5>
+                  <p><strong>Preço:</strong> R$ {{ jogo['preco'] }}</p>
+                  <p><strong>Descrição:</strong> {{ jogo['descricao'] }}</p>
+                  <p><strong>Data de Lançamento:</strong> {{ jogo['data_lancamento'] }}</p>
+                </div>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <div class="alert alert-info text-center" role="alert">
+          Nenhum jogo encontrado na biblioteca.
+        </div>
+      {% endif %}
+      
+      <!-- Link para voltar -->
+      <div class="text-center mt-4">
+        <a href="{{ url_for('empresa') }}" class="btn btn-primary">Voltar para o Index</a>
+      </div>
+    </div>
+
+    <!-- Incluindo o JavaScript do Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </body>
 </html>
