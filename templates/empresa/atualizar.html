@@ -1,20 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atualizar empresa</title>
+    <title>Atualizar Empresa</title>
+    <!-- Incluindo o Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>atualizar empresa</h1>
-    <form action="/atualizarEmpre" method="post" enctype="multipart/form-data">
-        <!--<input type="text" name="antigoNomeEmpresa" placeholder="Digite o antigo nome da empresa">-->
-        <input type="text" name="novoNomeEmpresa" class="form-control" placeholder="Digite o novo nome da empresa" required>
-        <input type="email" name="novoEmailEmpresa" class="form-control" placeholder="Digite o novo email da empresa" required>
-        <input type="password" name="novaSenhaEmpresa" class="form-control" placeholder="Digite uma nova senha para a empresa" required>
-        <input type="file" name="novoLogo" class="form-control" accept=".jpeg, .jpg">
-        <input type="text" name="novaDescricaoEmpresa" class="form-control" placeholder="Digite uma nova e breve descrição da empresa" required>
-        <button type="submit">clica ai dog</button>
-    </form>
+    <div class="container mt-5">
+        <!-- Título -->
+        <h1 class="text-center mb-4">Atualizar Empresa</h1>
+
+        <!-- Formulário -->
+        <form action="/atualizarEmpre" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="novoNomeEmpresa">Novo Nome da Empresa</label>
+                <input type="text" class="form-control" id="novoNomeEmpresa" name="novoNomeEmpresa" placeholder="Digite o novo nome da empresa" required>
+            </div>
+
+            <div class="form-group">
+                <label for="novoEmailEmpresa">Novo E-mail da Empresa</label>
+                <input type="email" class="form-control" id="novoEmailEmpresa" name="novoEmailEmpresa" placeholder="Digite o novo e-mail da empresa" required>
+            </div>
+
+            <div class="form-group">
+                <label for="novaSenhaEmpresa">Nova Senha para a Empresa</label>
+                <input type="password" class="form-control" id="novaSenhaEmpresa" name="novaSenhaEmpresa" placeholder="Digite uma nova senha para a empresa" required>
+            </div>
+
+            <div class="form-group">
+                <label for="novoLogo">Novo Logo da Empresa</label>
+                <input type="file" class="form-control-file" id="novoLogo" name="novoLogo" accept=".jpeg, .jpg">
+            </div>
+
+            <div class="form-group">
+                <label for="novaDescricaoEmpresa">Nova Descrição da Empresa</label>
+                <input type="text" class="form-control" id="novaDescricaoEmpresa" name="novaDescricaoEmpresa" placeholder="Digite uma nova e breve descrição da empresa" required>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Atualizar Empresa</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Incluindo o JavaScript do Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
