@@ -1,16 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Deletar Jogo</title>
+  <!-- Incluindo o Bootstrap -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<h1>deletar jogo</h1>
-<form action="/deletarJogo" method="post">
-    <input type="text" name="antigoNomeJogo" placeholder="Digite o nome do jogo que será deletado">
-    <button type="submit">Clica ai dog</button>
-</form>
+  <div class="container mt-5">
+    <!-- Título -->
+    <h1 class="text-center mb-4">Deletar Jogo</h1>
 
+    <!-- Formulário -->
+    <form action="/deletarJogo" method="post">
+      <div class="form-group">
+        <label for="antigoNomeJogo">Nome do Jogo a ser Deletado</label>
+        <input type="text" class="form-control" id="antigoNomeJogo" name="antigoNomeJogo" placeholder="Digite o nome do jogo que será deletado" required>
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="btn btn-danger">Deletar Jogo</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Incluindo o JavaScript do Bootstrap -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
