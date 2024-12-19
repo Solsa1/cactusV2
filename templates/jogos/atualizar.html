@@ -1,20 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Atualizar Jogo</title>
+  <!-- Incluindo o Bootstrap -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<h1>atualizar jogos</h1>
-<form action="/atualizarJogos" method="post" enctype="multipart/form-data">
-    <input type="text" name="nomeAntigoJogo" placeholder="Digite o nome do seu jogo que você quer mudar">
-    <input type="text" name="nomeNovoJogo" placeholder="Digite o novo nome do seu jogo">
-    <input type="text" name="precoNovoJogo" placeholder="Digite o novo preco do jogo">
-    <input type="text" name="descricaoNovoJogo" placeholder="Digite uma nova breve descricao do jogo">
-    <input type="file" name="fotoNovoJogo" accept=".jpeg, .jpg">
-    <input type="date" name="dataLNovoJogo" placeholder="Digite a nova data de lancamento do jogo">
-    <button type="submit">clica ai</button>
-</form>
+  <div class="container mt-5">
+    <!-- Título -->
+    <h1 class="text-center mb-4">Atualizar Jogo</h1>
+
+    <!-- Formulário -->
+    <form action="/atualizarJogos" method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="nomeAntigoJogo">Nome do Jogo (Antigo)</label>
+        <input type="text" class="form-control" id="nomeAntigoJogo" name="nomeAntigoJogo" placeholder="Digite o nome do seu jogo que você quer mudar" required>
+      </div>
+
+      <div class="form-group">
+        <label for="nomeNovoJogo">Novo Nome do Jogo</label>
+        <input type="text" class="form-control" id="nomeNovoJogo" name="nomeNovoJogo" placeholder="Digite o novo nome do seu jogo" required>
+      </div>
+
+      <div class="form-group">
+        <label for="precoNovoJogo">Novo Preço do Jogo</label>
+        <input type="text" class="form-control" id="precoNovoJogo" name="precoNovoJogo" placeholder="Digite o novo preço do jogo" required>
+      </div>
+
+      <div class="form-group">
+        <label for="descricaoNovoJogo">Nova Descrição do Jogo</label>
+        <input type="text" class="form-control" id="descricaoNovoJogo" name="descricaoNovoJogo" placeholder="Digite uma nova breve descrição do jogo" required>
+      </div>
+
+      <div class="form-group">
+        <label for="fotoNovoJogo">Nova Foto do Jogo</label>
+        <input type="file" class="form-control-file" id="fotoNovoJogo" name="fotoNovoJogo" accept=".jpeg, .jpg" required>
+      </div>
+
+      <div class="form-group">
+        <label for="dataLNovoJogo">Nova Data de Lançamento</label>
+        <input type="date" class="form-control" id="dataLNovoJogo" name="dataLNovoJogo" required>
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary">Atualizar Jogo</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Incluindo o JavaScript do Bootstrap -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
